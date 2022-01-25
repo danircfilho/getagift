@@ -1,6 +1,8 @@
-const User = require('../models/User')
+const User = require('../models/User') //models
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt') //módulo de criptografia
+
+const createUserToken = require('../helpers/create-user-token') //token
 
 //escrever as rotas
 module.exports = class UserController {
@@ -63,9 +65,12 @@ module.exports = class UserController {
     })
 
     //tratar erros e salvar o novo usuário (user) no banco
-    try {
+    try {      
       const newUser = await user.save()
-      res.status(201).json({ message: 'User created successfully!', newUser })
+      await createUserToken(newUser, req, res) //Token
+      /* trocaremos este código pelo token criado
+          res.status(201).json({ message: 'User created successfully!', newUser })
+      */      
     } 
     catch(error) {
       res.status(500).json({ message: error })
