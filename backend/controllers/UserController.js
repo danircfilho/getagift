@@ -2,7 +2,11 @@ const User = require('../models/User') //models
 
 const bcrypt = require('bcrypt') //módulo de criptografia
 
-const createUserToken = require('../helpers/create-user-token') //token
+const jwt = require('jsonwebtoken') //importar jwt
+
+//helpers
+const createUserToken = require('../helpers/create-user-token') //criar token
+const getToken = require('../helpers/get-token') //pegar token
 
 //escrever as rotas
 module.exports = class UserController {
@@ -111,15 +115,24 @@ module.exports = class UserController {
       await createUserToken(user, req, res) 
     }
 
+    //checar o usuário pelo token
     static async checkUser(req, res) {
 
       let currentUser //variável que mudará e contem o usuário que está sendo verificado
 
-      console.log(req.headers.authorization)
-
       if (req.headers.authorization) {
+
+        const token = getToken(req) //passar o token
+        const decoded = jwt.verify(token, 'nossosecret') //verifica e valida o token e o nosso 'secret'
+        
+        //o verify do jwt traz todas as informações do usuário verificado (currentUser)
+        currentUser = await User.findById(decoded.id) //extrair o usuário a partir do token
+        currentUser.password = undefined // IMPORTANTE!!!! COMO TRAZ AS INFORMAÇÕES DEVE-SE ZERAR A SENHA!!!
+
       } else {
+
         currentUser = null
+        
       }
 
       res.status(200).send(currentUser)
