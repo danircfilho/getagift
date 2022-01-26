@@ -76,4 +76,52 @@ module.exports = class UserController {
       res.status(500).json({ message: error })
     }
   }
+  
+    //login
+    static async login(req, res) {
+      const { email, password }  = req.body
+
+      if (!email) {
+        res.status(422).json({ message: 'Email is mandatory!' })
+        return
+      }
+
+      if (!password) {
+        res.status(422).json({ message: 'Password is required!' })
+        return
+      }
+
+      //verificar se o usuario existe
+      const user = await User.findOne({ email: email })
+
+      if (!user) {
+        res.status(422).json({ message: 'There is no user registered with this email!' })
+        return
+      }
+
+      //verificar se senha confere com a do bd
+      const checkpassword = await bcrypt.compare(password, user.password)
+
+      if (!checkpassword) {
+        res.status(422).json({ message: 'Invalid password!' })
+        return
+      }
+      
+      //Token - Depois de usuário e senha veificados o token libera o login
+      await createUserToken(user, req, res) 
+    }
+
+    static async checkUser(req, res) {
+
+      let currentUser //variável que mudará e contem o usuário que está sendo verificado
+
+      console.log(req.headers.authorization)
+
+      if (req.headers.authorization) {
+      } else {
+        currentUser = null
+      }
+
+      res.status(200).send(currentUser)
+    }
 }   
