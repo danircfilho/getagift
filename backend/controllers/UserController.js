@@ -165,7 +165,13 @@ module.exports = class UserController {
     //pegar os campos que vem do body
     const { name, email, phone, password, confirmpassword } = req.body
 
-    let image = '' //variável vazia para trocar imagens
+    //variável vazia para trocar imagens
+    //let image = ''  - para testes
+    
+    // o middleware ciado com o multer disponibiliza o arquivo de imagem com as especificações codificadas
+    if (req.file) {
+      user.image = req.file.filename
+    }
 
       //validações
     if (!name) {
@@ -208,7 +214,6 @@ module.exports = class UserController {
       user.password = passwordHash
     }
 
-    console.log(user)
     try {
       //retornar dados atualizados do usuário
       await User.findOneAndUpdate(
