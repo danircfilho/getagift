@@ -3,7 +3,7 @@ const path = require('path')
 
 //destino para armazenar as imagens
 const imageStorage = multer.diskStorage ({
-  destination: function(req, res, cb) {
+  destination: function(req, file, cb) {
 
     //variável vazia" para receber e destinar a varios lugares
     let folder = ""
@@ -11,16 +11,17 @@ const imageStorage = multer.diskStorage ({
     //pela url destina-se a pasta (public pastas users e thgs)
     if(req.baseUrl.includes('users')) {
       folder = 'users'
-    } else if (req, baseUrl.includes('thgs')) {
+    } else if (req.baseUrl.includes('thgs')) {
       folder = 'thgs'
     }
 
-    //cb - call back (resultado da lógica, para onde foram os arquivos de imagens)
+    //cb - call back (resultado da lógica, para onde foram os arquivos de imagens) 
     cb( null, `public/images/${folder}` )
   }, 
 
     filename: function(req, file, cb) {
-      cb( null, Date.now() + path.extname(file.originalname))
+      //string - math para numeros aleatórios com diferenças x 1000 (para não repetir alguma sequencia)
+      cb( null, Date.now() + String(Math.random() * 1000) + path.extname(file.originalname))
     },
 })
 
