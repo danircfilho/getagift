@@ -125,6 +125,7 @@ module.exports = class ThgController {
 
     if(!thg) {
       res.status(404).json({ message: 'Donation not found!' })
+      return
     }
 
     res.status(200).json({
@@ -157,7 +158,7 @@ module.exports = class ThgController {
     const token = getToken(req)
     const user = await getUserByToken(token)
 
-    if(pet.user._id.toString() !== user._id.toString()) {
+    if(thg.user._id.toString() !== user._id.toString()) {
       res.status(422).json({ message: 'We were unable to process your request. Try again later.' })
       return
     }
@@ -167,6 +168,7 @@ module.exports = class ThgController {
     res.status(200).json({ message: 'Donation successfully removed!' })
   }
 
+  //REVER - 259 - BUGS - POSTMAN
   static async updateThg(req, res) {
     const id = req.params.id
 
@@ -174,16 +176,133 @@ module.exports = class ThgController {
 
     const images = req.files 
 
-    const updateData = {} //aqui os dados ficaraão atualizados
+    const updatedData = {} //variável para armazanar as imagens
 
     //checar se a doação existe
     const thg = await Thg.findOne({ _id: id })
 
-    if(!thg) {
+    if (!thg) {
       res.status(404).json({ message: 'Donation not found!' })
       return
     }
 
+    //checar se o usuário existe
+    const token = getToken(req)
+    const user = await getUserByToken(token)
+
+    if(thg.user._id.toString() !== user._id.toString()) {
+      res.status(422).json({ message: 'We were unable to process your request. Try again later.' })
+      return
+    }
+
+    //validações
+    if(!name) {
+      res.status(422).json({ message: 'The name is mandatory!' })
+      return
+    } else{
+      updatedData.name = name
+    }
+
+    if(!age) {
+      res.status(422).json({ message: 'The age is mandatory!' })
+      return
+    } else{
+      updatedData.age = age
+    }
+
+    if(!weight) {
+      res.status(422).json({ message: 'The weight is mandatory!' })
+      return
+    } else{
+      updatedData.weight = weight
+    }
+
+    if(!color) {             
+      res.status(422).json({ message: 'The color is mandatory!' })
+      return
+    } else{
+      updatedData.color = color
+    }
+
+    if(images.length === 0) {             
+      res.status(422).json({ message: 'The image is mandatory!' })
+      return
+    } else{
+      updatedData.images = []
+      images.map((image) => {
+        updatedData.images.push(image.filename)
+      })
+    }
+
+    await Thg.findByIdAndUpdate(id, updatedData)
+
+    res.status(200).json({ message: 'Donations Updated Successfully!'})
   }
 
+  static async schedule(req, res) {
+
+    const id = req.params.id
+
+    //checar se a doação existe
+    const thg = await Thg.findOne({ _id: id })
+
+    if (!thg) {
+      res.status(404).json({ message: 'Donation not found!' })
+      return
+    }
+
+    //checar se o usuário é o mesmo (para não marcar visita para si)
+    const token = getToken(req)
+    const user = await getUserByToken(token)
+
+    if(thg.user._id.equals(user._id)) {
+      res.status(422).json({ message: 'You cannot schedule a visit to receive donations yourself!' })
+      return
+    }
+
+    //verificar se a pessoa já agendou uma visita
+    if(thg.acquired) {
+      if(thg.acquired._id.equals(user._id)) {
+        res.status(422).json({ message: 'You have already scheduled a visit to receive a donation!' })
+        return
+      }
+    }
+  
+    //Adicionar o usuário como recebedor da doação
+    thg.acquired = {
+      _id: user._id,
+      name: user.name,
+      image: user.image
+    }
+    await Thg.findByIdAndUpdate(id, thg)
+
+    res.status(200).json({ message: `Visit successfully scheduled! Contact ${thg.user.name} by phone ${thg.user.phone}`})
+  }
+
+  static async concludeDonation(req, res) {
+    const id = req.params.id
+
+    //checar se a doação existe
+    const thg = await Thg.findOne({ _id: id })
+
+    if (!thg) {
+      res.status(404).json({ message: 'Donation not found!' })
+      return
+    }
+
+    //confirmar que o usuário doador confirme a doação (verificar se é o usuário)
+    const token = getToken(req)
+    const user = await getUserByToken(token)
+
+    if(thg.user._id.toString() !== user._id.toString()) {
+      res.status(422).json({ message: 'We were unable to process your request. Try again later.' })
+      return
+    }
+
+    thgs.available = false 
+
+    await Thg.findByIdAndUpdate(id, thg)
+
+    res.status(200).json({ message: 'Congratulations! Your donation has been completed!' })
+  }
 }

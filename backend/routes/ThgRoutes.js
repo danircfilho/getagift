@@ -13,5 +13,7 @@ router.get('/myget', checkToken, ThgController.getAllUserGet)//minhas doações 
 router.get('/:id', ThgController.getThgById)//marcar visita
 router.delete('/:id', checkToken, ThgController.removeThgById)//evitar que alguém mal intencionado remova algum item de doação
 router.patch('/:id', checkToken, imageUpload.array('images'), ThgController.updateThg)//atualizar
+router.patch('/schedule:/id', checkToken, ThgController.schedule)//agendar visita
+router.patch('/conclude:/id', checkToken, ThgController.concludeDonation)//concluir doação
 
 module.exports = router
