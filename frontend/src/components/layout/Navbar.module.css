@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1em 1.5em;
-  background-color: #373737;
+  background-color: #494E6B;
   color: #f5f5f5;
 }
 
@@ -34,9 +34,9 @@
 }
 
 .navbar li:hover {
-  background-color: #a8a8a8;
+  background-color: #98878F;
 }
 
 .navbar li:hover >a {
-  color: #373737;
+  color: #494E6B;
 }
