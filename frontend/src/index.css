@@ -1,0 +1,20 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Helvetica;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #C0b283;
+}
+
+h1 {
+  color: #f5f5f5 /* #16479d */;
+  margin-bottom: 1em;
+  font-size: 2.1em;
+}
+
+.bold {
+  color: #f5f5f5;
+}
