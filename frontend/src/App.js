@@ -11,24 +11,31 @@ import Register from './components/pages/Auth/Register'
 import Home from './components/pages/Home'
 import Container from './components/layout/Container'
 
+/* Context */
+import { UseProvider } from './context/UserContext'
+import Message from './components/layout/Message'
+
 function App() {
   return (
     <Router>
-      <Navbar />
-        <Container>
-          <Switch>
-            <Route path='/login'>
-              <Login />
-            </Route>
-            <Route path='/register'>
-              <Register />
-            </Route>
-            <Route path='/'>
-              <Home />
-            </Route>
-          </Switch>
-        </Container>
-      <Footer />
+      <UseProvider>
+        <Navbar />
+        <Message />
+          <Container>
+            <Switch>
+              <Route path='/login'>
+                <Login />
+              </Route>
+              <Route path='/register'>
+                <Register />
+              </Route>
+              <Route path='/'>
+                <Home />
+              </Route>
+            </Switch>
+          </Container>
+        <Footer />
+      </UseProvider>
     </Router>
   );
 }
