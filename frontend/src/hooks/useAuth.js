@@ -18,9 +18,9 @@ export default function useAuth() {
       setAuthenticated(true)
     }
 
-}, [])
+  }, [])
 
-  //criar uma função para enviar o registro do usuário para o BD
+  //Registrar
   async function register(user) {
 
     //mensagens 
@@ -43,12 +43,48 @@ export default function useAuth() {
     setFlashMessage(msgText, msgType)
   }
 
+  //Logar  
+  async function login(user) {
+    //função assincrona por causa do BD que pode demorar em responder
+    let msgText = 'Login successfully'
+    let msgType = 'success'
+
+    try {
+      const data = await api.post('/users/login', user).then((response) => {
+        return response.data
+      })
+
+      await authUser(data)
+
+    } catch (error) {
+      msgText = error.response.data.message
+      msgType = 'error'
+    }
+
+    setFlashMessage(msgText, msgType)
+  }
+
+  //Autenticar Usuário
   async function authUser(data) {
     setAuthenticated(true)
     localStorage.setItem('token', JSON.stringify(data.token))
 
     history.push('/')
   }
+  
+  //Logout
+  function logout() {
+    const msgText = 'Logout successful'
+    const msgType = 'success'
 
-  return { authenticated, register }
+    setAuthenticated(false)
+    localStorage.removeItem('token')
+    api.defaults.headers.Authorization = undefined
+
+    history.push('/')
+
+    setFlashMessage(msgText, msgType)
+  }
+
+  return { register, authenticated, logout, login }
 }

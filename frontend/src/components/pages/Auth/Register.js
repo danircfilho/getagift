@@ -12,11 +12,13 @@ function Register() {
 
   const [ user, setUser] = useState({}) //seta o usuário
   const { register } = useContext(Context)
- 
+
+  //Preencher usuário
   function handleChange(e) {
     setUser({...user, [e.target.name]: e.target.value }) //pelo nome toda mudança fica registrada
   }
- 
+
+  //Enviar os dados para o backend
   function handleSubmit(e) {
     e.preventDefault()
     register(user)
