@@ -28,6 +28,9 @@ function Navbar() {
           (
             <>
               <li>
+                <Link to="/thgs/mythgs">Things</Link>
+              </li>
+              <li>
                 <Link to="/user/profile">Profile</Link>
               </li>
               <li onClick={logout}>Exit</li> 

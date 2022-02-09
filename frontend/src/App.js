@@ -15,6 +15,7 @@ import Container from './components/layout/Container'
 /* Context */
 import { UseProvider } from './context/UserContext'
 import Message from './components/layout/Message'
+import MyThgs from './components/pages/Thg/MyThgs'
 
 function App() {
   return (
@@ -32,6 +33,9 @@ function App() {
               </Route>
               <Route path='/user/profile'>
                 <Profile />
+              </Route>
+              <Route path='/thgs/mythgs'>
+                <MyThgs />
               </Route>
               <Route path='/'>
                 <Home />
