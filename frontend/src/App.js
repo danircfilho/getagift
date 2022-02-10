@@ -16,6 +16,7 @@ import Container from './components/layout/Container'
 import { UseProvider } from './context/UserContext'
 import Message from './components/layout/Message'
 import MyThgs from './components/pages/Thg/MyThgs'
+import AddThg from './components/pages/Thg/AddThg'
 
 function App() {
   return (
@@ -34,8 +35,11 @@ function App() {
               <Route path='/user/profile'>
                 <Profile />
               </Route>
-              <Route path='/thgs/mythgs'>
+              <Route path='/thg/mythgs'>
                 <MyThgs />
+              </Route>
+              <Route path='/thg/add'>
+                <AddThg />
               </Route>
               <Route path='/'>
                 <Home />

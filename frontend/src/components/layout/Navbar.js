@@ -28,7 +28,7 @@ function Navbar() {
           (
             <>
               <li>
-                <Link to="/thgs/mythgs">Things</Link>
+                <Link to="/thg/mythgs">Things</Link>
               </li>
               <li>
                 <Link to="/user/profile">Profile</Link>
