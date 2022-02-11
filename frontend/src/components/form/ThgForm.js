@@ -3,6 +3,7 @@ import { useState } from 'react'
 import formStyles from './Form.module.css'
 
 import Input from './Input'
+import Select from './Select'
 
 function ThgForm(handleSubmit, thgData, btnText) {
   const [thg, setThg] = useState(thgData || {})
@@ -10,15 +11,43 @@ function ThgForm(handleSubmit, thgData, btnText) {
   const colors = ['White', 'Black', 'Silver', 'Gold', 'Not mentioned']
 
   function onFileChange(e) {
-
+    setPreview(Array.from(e.target.files))
+    setThg({ ...thg, images: [...e.target.files] })
   }
 
   function handleChange(e) {
+    setThg({ ...thg, [e.target.name]: e.target.value })
+  } 
 
+  function handleColor(e) {
+    setThg({ ...thg, color: e.target.options[e.target.selectedIndex].text })
+  }
+
+  function submit(e) {
+    e.preventDefault()
+    handleSubmit(thg)
   }
 
   return (            
-    <form className={formStyles.form_container}>
+    <form onSubmit={submit} className={formStyles.form_container}>
+      <div className={formStyles.preview_pet_images}>
+        {preview.length > 0
+          ? preview.map((image, index) => (
+            <img 
+              src={URL.createObjectURL(image)} 
+              alt={thg.name} key={`${thg.name}+${index}`} 
+            />
+          ))
+          : thg.image && 
+          thg.image.map((image, index) => (
+            <img 
+              src={`${process.env.REACT_APP_API}/images/thgs/${image}`} 
+              alt={thg.name} 
+              key={`${thg.name}+${index}`} 
+            />
+          ))
+        }
+      </div>
       <Input 
         text="Image of donated items"
         type="file"
@@ -50,6 +79,13 @@ function ThgForm(handleSubmit, thgData, btnText) {
         handleOnChange={handleChange}
         value={thg.weight || ''}
       />
+      <Select 
+        name="color"
+        text="Select color"
+        options={colors}
+        handleOnChange={handleColor}
+        value={thg.color || ''}
+      />
       <input type="submit" value="Register Item" />
     </form>
   )
@@ -58,3 +94,4 @@ function ThgForm(handleSubmit, thgData, btnText) {
 export default ThgForm
 
 /* btnText = muda no componente */
+
