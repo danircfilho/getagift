@@ -1,4 +1,4 @@
-import  api from '../../../utils/api'
+import api from '../../../utils/api'
 
 import ThgForm from '../../form/ThgForm'
 
@@ -55,11 +55,11 @@ function AddThg() {
     <section className={styles.addthg_header}>
       <div>
         <h1>Register your donation</h1>
-        <p>Ficará disponível</p>
       </div>
-      <ThgForm handleSubmit={registerThg} />      
+      <ThgForm handleSubmit={registerThg} btnText="Register Item" />      
     </section>
   )
 }
 
 export default AddThg
+

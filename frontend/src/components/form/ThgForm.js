@@ -5,41 +5,43 @@ import formStyles from './Form.module.css'
 import Input from './Input'
 import Select from './Select'
 
-function ThgForm(handleSubmit, thgData, btnText) {
+function ThgForm({handleSubmit, thgData, btnText}) {
   const [thg, setThg] = useState(thgData || {})
   const [preview, setPreview] = useState([])
   const colors = ['White', 'Black', 'Silver', 'Gold', 'Not mentioned']
 
   function onFileChange(e) {
     setPreview(Array.from(e.target.files))
-    setThg({ ...thg, images: [...e.target.files] })
+    setThg({...thg, images: [...e.target.files]})
   }
 
   function handleChange(e) {
-    setThg({ ...thg, [e.target.name]: e.target.value })
+    setThg({...thg, [e.target.name]: e.target.value})
   } 
 
   function handleColor(e) {
-    setThg({ ...thg, color: e.target.options[e.target.selectedIndex].text })
+    setThg({...thg, color: e.target.options[e.target.selectedIndex].text })
   }
 
   function submit(e) {
     e.preventDefault()
+    console.log(thg)
     handleSubmit(thg)
   }
 
   return (            
     <form onSubmit={submit} className={formStyles.form_container}>
-      <div className={formStyles.preview_pet_images}>
+      <div className={formStyles.preview_thg_images}>
         {preview.length > 0
           ? preview.map((image, index) => (
             <img 
               src={URL.createObjectURL(image)} 
-              alt={thg.name} key={`${thg.name}+${index}`} 
+              alt={thg.name} 
+              key={`${thg.name}+${index}`} 
             />
           ))
-          : thg.image && 
-          thg.image.map((image, index) => (
+          : thg.images && 
+          thg.images.map((image, index) => (
             <img 
               src={`${process.env.REACT_APP_API}/images/thgs/${image}`} 
               alt={thg.name} 
@@ -86,7 +88,7 @@ function ThgForm(handleSubmit, thgData, btnText) {
         handleOnChange={handleColor}
         value={thg.color || ''}
       />
-      <input type="submit" value="Register Item" />
+      <input type="submit" value={btnText} />
     </form>
   )
 }
