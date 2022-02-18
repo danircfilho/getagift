@@ -11,7 +11,7 @@ module.exports = class ThgController {
 
     const { name, age, weight, color } = req.body
 
-    const images = req.files //de onde as imagensvem (arquivos)
+    const images = req.files //de onde as imagens vem (arquivos)
 
     const available = true
 
@@ -150,7 +150,7 @@ module.exports = class ThgController {
       return
     }
 
-    res.status(200).json({
+    res.status(200).json({ 
       thg: thg,
     })
 
@@ -160,12 +160,12 @@ module.exports = class ThgController {
 
     if(thg.user._id.toString() !== user._id.toString()) {
       res.status(422).json({ message: 'We were unable to process your request. Try again later.' })
-      return
+      /* return */
     }
 
     await Thg.findByIdAndRemove(id)
-
-    res.status(200).json({ message: 'Donation successfully removed!' })
+    /* Donation successfully removed! */ 
+    res.status(422).json({ message: 'Removido com sucesso.' }) 
   }
 
   //REVER - 259 - BUGS - POSTMAN

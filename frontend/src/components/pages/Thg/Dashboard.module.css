@@ -1,0 +1,93 @@
+.thglist_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.thglist_header h1 {
+  margin: 0;
+}
+
+.thglist_header a {
+  text-decoration: none;
+  background-color: #192231;
+  color: #f5f5f5;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+  border: 2px solid #192231;
+}
+
+.thglist_header a:hover {
+  background-color: transparent;
+  color: #192231;
+}
+
+.thglist_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.thglist_row {
+  border-bottom: 1px solid #192231;
+  padding: 1em;
+  margin: 1em;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.thglist_row img {
+  margin-right: 1em;
+}
+
+.thglist_row span {
+  min-width: 100px;
+}
+
+.actions {
+  margin-left: auto;
+}
+
+.actions a,
+.actions button {
+  text-decoration: none;
+  color: #f5f5f5;
+  border: 2px solid #192231;
+  border-radius: 5px;
+  padding: 7px 12px;
+  background-color: #192231;
+  margin-left: 1em;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.actions a:hover,
+.actions button:hover {
+  background-color: transparent;
+  color: #192231;
+}
+
+.actions .conclude_btn {
+  color: #494E6B;
+  border-color: #494E6B;
+}
+
+.actions .conclude_btn:hover {
+  color: #f5f5f5;
+  background-color: #494E6B;
+}
+
+/* my adoptions */
+.contacts {
+  margin-left: 2em;
+}
+
+.contacts p {
+  margin-bottom: 0.5em;
+}
