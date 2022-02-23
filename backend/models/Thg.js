@@ -31,7 +31,7 @@ const Thg = mongoose.model(
       type: Boolean,
     },
     user: Object,
-    adopter: Object,
+    acquired: Object,
   }, {timestamps: true},)
 )
 

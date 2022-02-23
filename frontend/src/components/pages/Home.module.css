@@ -1,0 +1,65 @@
+.thg_home_header {
+  margin-bottom: 2em;
+}
+
+.thg_home_header h1 {
+  margin-bottom: 0.3em;
+}
+
+.thg_container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.thg_card {
+  width: 22%;
+  margin: 1.5%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.thg_card_image {
+  background-size: cover;
+  background-position: center;
+  height: 225px;
+  width: 100%;
+  margin-bottom: 1.2em;
+}
+
+.thg_card h3 {
+  color: #16479d;
+  margin-bottom: 1em;
+  font-size: 1.6em;
+  padding: 8px;
+}
+
+.thg_card p {
+  margin-bottom: 1em;
+}
+
+.thg_card a {
+  border-radius: 8px;
+  color: #16479d;
+  background-color: #ffd400;
+  border: none;
+  min-width: 100px;
+  padding: 15px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.thg_card a:hover {
+  background-color: #e7c30d;
+  color: #fff;
+}
+
+.adopted_text {
+  font-weight: bold;
+  color: #25b456;
+  padding: 15px;
+}

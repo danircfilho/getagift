@@ -31,6 +31,7 @@ function MyThgs() {
 
   /* Deletar */
   async function removeThg(id) {
+    
     let msgType = 'success'
 
     const data = await api.delete(`/thgs/${id}`, {

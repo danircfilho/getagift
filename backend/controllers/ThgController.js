@@ -1,8 +1,8 @@
 const Thg = require('../models/Thg')
 
 //helpers
-const getToken = require('../helpers/get-token')
 const getUserByToken = require('../helpers/get-user-by-token')
+const getToken = require('../helpers/get-token')
 const ObjectId = require('mongoose').Types.ObjectId //checar o id do usuário
 
 module.exports = class ThgController {
@@ -68,7 +68,7 @@ module.exports = class ThgController {
       const newThg = await thg.save() //salvar a nova doação
       res.status(201).json({
         message: 'Donation registered successfully!',
-        newThg, 
+        newThg: newThg, 
       })
     } catch(error) {
       res.status(500).json({ message: error })
@@ -104,7 +104,7 @@ module.exports = class ThgController {
     const user = await getUserByToken(token)
 
     //preencher o array com doações
-    const thgs = await Thg.find({ 'acquired_.id': user._id }).sort('-createdAt')
+    const thgs = await Thg.find({ 'acquired._id': user._id }).sort('-createdAt')
 
     res.status(200).json({
       thgs,
@@ -159,13 +159,12 @@ module.exports = class ThgController {
     const user = await getUserByToken(token)
 
     if(thg.user._id.toString() !== user._id.toString()) {
-      res.status(422).json({ message: 'We were unable to process your request. Try again later.' })
-      /* return */
+      res.status(404).json({ message: 'We were unable to process your request. Try again later.' })
+      return
     }
 
     await Thg.findByIdAndRemove(id)
-    /* Donation successfully removed! */ 
-    res.status(422).json({ message: 'Removido com sucesso.' }) 
+    res.status(200).json({ message: 'Donation successfully removed!' }) 
   }
 
   //REVER - 259 - BUGS - POSTMAN
@@ -204,7 +203,7 @@ module.exports = class ThgController {
     }
 
     if(!age) {
-      res.status(422).json({ message: 'The age is mandatory!' })
+      res.status(422).json({ message: 'Usage time is mandatory!' })
       return
     } else{
       updatedData.age = age
@@ -224,10 +223,7 @@ module.exports = class ThgController {
       updatedData.color = color
     }
 
-    if(images.length === 0) {             
-      res.status(422).json({ message: 'The image is mandatory!' })
-      return
-    } else{
+    if(images.length > 0) {             
       updatedData.images = []
       images.map((image) => {
         updatedData.images.push(image.filename)

@@ -17,6 +17,8 @@ import { UseProvider } from './context/UserContext'
 import Message from './components/layout/Message'
 import MyThgs from './components/pages/Thg/MyThgs'
 import AddThg from './components/pages/Thg/AddThg'
+import EditThg from './components/pages/Thg/EditThg'
+import ThgDetails from './components/pages/Thg/ThgDetails'
 
 function App() {
   return (
@@ -40,6 +42,12 @@ function App() {
               </Route>
               <Route path='/thg/add'>
                 <AddThg />
+              </Route>
+              <Route path='/thg/edit/:id'>
+                <EditThg />
+              </Route>
+              <Route path='/thg/:id'>
+                <ThgDetails />
               </Route>
               <Route path='/'>
                 <Home />
