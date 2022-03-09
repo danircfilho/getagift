@@ -19,6 +19,7 @@ import MyThgs from './components/pages/Thg/MyThgs'
 import AddThg from './components/pages/Thg/AddThg'
 import EditThg from './components/pages/Thg/EditThg'
 import ThgDetails from './components/pages/Thg/ThgDetails'
+import MyAcquire from './components/pages/Thg/MyAcquire'
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
               </Route>
               <Route path='/thg/edit/:id'>
                 <EditThg />
+              </Route>
+              <Route path='/thg/myacquire'>
+                <MyAcquire />
               </Route>
               <Route path='/thg/:id'>
                 <ThgDetails />

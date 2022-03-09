@@ -10,11 +10,9 @@ router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.get('/checkuser', UserController.checkUser)
 router.get('/:id', UserController.getUserById)
-router.patch( //multer: ao perceber um arquivo de imagem destina ao banco de dados
-  '/edit/:id', 
-  checkToken, 
-  imageUpload.single('image'), //recebe uma unica imagem (single)e destina ao campo do bd (image)
-  UserController.editUser
-) 
+router.patch('/edit/:id', checkToken, imageUpload.single('image'), UserController.editUser) 
 
 module.exports = router
+
+//multer: ao perceber um arquivo de imagem destina ao banco de dados
+//recebe uma unica imagem (single)e destina ao campo do bd (image)

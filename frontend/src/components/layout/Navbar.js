@@ -28,6 +28,9 @@ function Navbar() {
           (
             <>
               <li>
+                <Link to="/thg/myacquire">My Acquisitions</Link>
+              </li>
+              <li>
                 <Link to="/thg/mythgs">Things</Link>
               </li>
               <li>

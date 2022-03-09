@@ -43,7 +43,27 @@ function MyThgs() {
       /* remover do frontend e backend */
       const updatedThgs = thgs.filter((thg) => thg._id !== id)
       setThgs(updatedThgs)
-      return response.data
+      return response.data                        
+    })
+    .catch((err) => {
+      msgType= 'error'
+      return err.response.data
+    })
+
+    setFlashMessage(data.message, msgType)
+  }
+
+  async function concludeAcquired(id) {
+    
+    let msgType = 'success'
+
+    const data = await api.patch(`/thgs/conclude/${id}`, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`
+      }
+    })
+    .then((response) => {
+      return response.data                        
     })
     .catch((err) => {
       msgType= 'error'
@@ -72,8 +92,10 @@ function MyThgs() {
               <div className={styles.actions}>
                 {/* Verificar se a doação está disponível */}
                 {thg.available 
-                  ? (<> {thg.acquire && (
-                        <button className={styles.conclude_btn}>
+                  ? (<> {thg.acquired && (
+                        <button className={styles.conclude_btn} onClick={() => {
+                          concludeAcquired(thg._id)
+                        }}>
                           Complete the request
                         </button>
                       )}

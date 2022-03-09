@@ -3,7 +3,7 @@ const Thg = require('../models/Thg')
 //helpers
 const getUserByToken = require('../helpers/get-user-by-token')
 const getToken = require('../helpers/get-token')
-const ObjectId = require('mongoose').Types.ObjectId //checar o id do usuário
+const ObjectId = require('mongoose').Types.ObjectId
 
 module.exports = class ThgController {
     //criar os objetos de doação
@@ -91,7 +91,7 @@ module.exports = class ThgController {
     const user = await getUserByToken(token)
 
     //preencher o array com doações
-    const thgs = await Thg.find({ 'user_.id': user._id }).sort('-createdAt')
+    const thgs = await Thg.find({ 'user._id': user._id }).sort('-createdAt')
 
     res.status(200).json({
       thgs,
@@ -114,16 +114,16 @@ module.exports = class ThgController {
   static async getThgById(req, res) {
     const id = req.params.id
 
-    //checar se o id é válido
-    if(!ObjectId.isValid(id)) {
+    // check if id is valid
+    if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: 'Invalid Id!' })
       return
     }
 
-    //checar se a doação existe
+    // check if thg exists
     const thg = await Thg.findOne({ _id: id })
 
-    if(!thg) {
+    if (!thg) {
       res.status(404).json({ message: 'Donation not found!' })
       return
     }
@@ -149,7 +149,7 @@ module.exports = class ThgController {
       res.status(404).json({ message: 'Donation not found!' })
       return
     }
-
+                                  
     res.status(200).json({ 
       thg: thg,
     })
@@ -165,7 +165,7 @@ module.exports = class ThgController {
 
     await Thg.findByIdAndRemove(id)
     res.status(200).json({ message: 'Donation successfully removed!' }) 
-  }
+}
 
   //REVER - 259 - BUGS - POSTMAN
   static async updateThg(req, res) {

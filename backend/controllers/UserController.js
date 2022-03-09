@@ -165,9 +165,6 @@ module.exports = class UserController {
     //pegar os campos que vem do body
     const { name, email, phone, password, confirmpassword } = req.body
 
-    //variável vazia para trocar imagens
-    //let image = ''  - para testes
-    
     // o middleware ciado com o multer disponibiliza o arquivo de imagem com as especificações codificadas
     if (req.file) {
       user.image = req.file.filename
